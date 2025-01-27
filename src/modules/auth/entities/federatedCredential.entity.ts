@@ -1,3 +1,5 @@
+import { BaseModel } from '@libraries/BaseModel';
+import { ApiHideProperty } from '@nestjs/swagger';
 import {
   BelongsTo,
   Column,
@@ -5,8 +7,6 @@ import {
   ForeignKey,
   Table,
 } from 'sequelize-typescript';
-import { BaseModel } from '@libraries/BaseModel';
-import { ApiHideProperty } from '@nestjs/swagger';
 import { User } from 'src/modules/user/entities/user.entity';
 
 @Table({
@@ -34,6 +34,8 @@ export class FederatedCredential extends BaseModel<FederatedCredential> {
   userId: number;
 
   @ApiHideProperty()
-  @BelongsTo(() => User)
+  @BelongsTo(() => User, {
+    onDelete: 'CASCADE',
+  })
   user: User;
 }

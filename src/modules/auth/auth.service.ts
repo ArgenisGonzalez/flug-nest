@@ -1,3 +1,15 @@
+import { config } from '@config/index';
+import { Logger } from '@core/logger/Logger';
+import { Plain } from '@libraries/BaseModel';
+import { FederatedUserDto } from '@modules/auth/dto/federatedUser.dto';
+import { MailingService } from '@modules/email/email.service';
+import { Role } from '@modules/role/entities/role.entity';
+import { ROLES } from '@modules/role/enums/roles.enum';
+import { RoleRepository } from '@modules/role/role.repository';
+import { CreateUserDto } from '@modules/user/dto/create-user.dto';
+import { UserResponseDto } from '@modules/user/dto/user-response.dto';
+import { User } from '@modules/user/entities/user.entity';
+import { UserRepository } from '@modules/user/user.repository';
 import {
   ForbiddenException,
   Injectable,
@@ -5,23 +17,12 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { SignInDto } from './dto/signIn.dto';
-import { User } from '@modules/user/entities/user.entity';
-import { config } from '@config/index';
-import { add } from 'date-fns';
-import * as uuid from 'uuid';
-import _ from 'lodash';
-import { UserRepository } from '@modules/user/user.repository';
-import { Logger } from '@core/logger/Logger';
-import { Plain } from '@libraries/BaseModel';
-import { FederatedCredentialRepository } from './federatedCredential.Repository';
 import crypto from 'crypto';
-import { FederatedUserDto } from '@modules/auth/dto/federatedUser.dto';
-import { RoleRepository } from '@modules/role/role.repository';
-import { ROLES } from '@modules/role/enums/roles.enum';
-import { CreateUserDto } from '@modules/user/dto/create-user.dto';
-import { UserResponseDto } from '@modules/user/dto/user-response.dto';
-import { MailingService } from '@modules/email/email.service';
+import { add } from 'date-fns';
+import _ from 'lodash';
+import * as uuid from 'uuid';
+import { SignInDto } from './dto/signIn.dto';
+import { FederatedCredentialRepository } from './federatedCredential.Repository';
 export interface Token {
   token: string;
   expires: number;

@@ -1,9 +1,10 @@
 import { Plain } from '@libraries/BaseModel';
-import { Exclude, Expose, plainToClass } from 'class-transformer';
-import { AuthType, User } from '../entities/user.entity';
+import { FederatedCredential } from '@modules/auth/entities/federatedCredential.entity';
 import { Role } from '@modules/role/entities/role.entity';
 import { UserRole } from '@modules/userrole/entities/userrole.entity';
 import { ApiHideProperty } from '@nestjs/swagger';
+import { Exclude, Expose, plainToClass } from 'class-transformer';
+import { AuthType, User } from '../entities/user.entity';
 
 export class UserResponseDto implements Plain<User> {
   @Expose()
@@ -29,6 +30,9 @@ export class UserResponseDto implements Plain<User> {
   @Expose()
   @ApiHideProperty()
   roles: Role[] = undefined;
+  @Expose()
+  @ApiHideProperty()
+  federatedCredentials: FederatedCredential[] = undefined;
   @Expose()
   createdAt?: Date;
   @Expose()

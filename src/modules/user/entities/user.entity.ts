@@ -1,3 +1,10 @@
+import { BaseModel } from '@libraries/BaseModel';
+import { FederatedCredential } from '@modules/auth/entities/federatedCredential.entity';
+import { Role } from '@modules/role/entities/role.entity';
+import { UserRole } from '@modules/userrole/entities/userrole.entity';
+import { ApiHideProperty } from '@nestjs/swagger';
+import bcrypt from 'bcrypt';
+import { Transaction } from 'sequelize';
 import {
   BeforeBulkCreate,
   BeforeBulkUpdate,
@@ -9,13 +16,6 @@ import {
   HasMany,
   Table,
 } from 'sequelize-typescript';
-import bcrypt from 'bcrypt';
-import { Role } from '@modules/role/entities/role.entity';
-import { UserRole } from '@modules/userrole/entities/userrole.entity';
-import { Transaction } from 'sequelize';
-import { BaseModel } from '@libraries/BaseModel';
-import { ApiHideProperty } from '@nestjs/swagger';
-import { FederatedCredential } from '@modules/auth/entities/federatedCredential.entity';
 export enum AuthType {
   Email = 'email',
   Microsoft = 'microsoft',
@@ -88,6 +88,13 @@ export class User extends BaseModel<User> {
     onDelete: 'CASCADE',
   })
   userRoles: UserRole[];
+
+  @ApiHideProperty()
+  @HasMany(() => FederatedCredential, {
+    hooks: true,
+    onDelete: 'CASCADE',
+  })
+  federatedCredentials: FederatedCredential[];
 
   @ApiHideProperty()
   @BelongsToMany(() => Role, {
