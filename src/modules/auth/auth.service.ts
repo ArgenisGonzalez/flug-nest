@@ -165,7 +165,7 @@ export class AuthService {
       user = await this.userRepository.create(
         {
           firstName: federatedUser.firstName,
-          lastName: federatedUser.firstName,
+          lastName: federatedUser.lastName,
           email: federatedUser.email as string,
           isEmailConfirmed: true,
           password: crypto.randomBytes(48).toString('hex') as string,
