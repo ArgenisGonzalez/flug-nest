@@ -140,9 +140,15 @@ export class AuthService {
           googleUser.provider,
           googleUser.id,
         );
-      const user = await this.userRepository.findOneById(
-        federatedCredentials.userId,
-      );
+      const user = await this.userRepository.findOne({
+        where: { id: federatedCredentials.userId },
+        include: [
+          {
+            model: Role,
+            as: 'roles',
+          },
+        ],
+      });
       return await this.createCredentials(user);
     } catch (error) {
       this.logger.error(error);
